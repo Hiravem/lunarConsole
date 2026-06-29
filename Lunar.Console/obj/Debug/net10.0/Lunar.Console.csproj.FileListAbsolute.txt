@@ -16,3 +16,4 @@ E:\mode3d\lunarConsole\Lunar.Console\obj\Debug\net10.0\refint\Lunar.Console.dll
 E:\mode3d\lunarConsole\Lunar.Console\obj\Debug\net10.0\Lunar.Console.pdb
 E:\mode3d\lunarConsole\Lunar.Console\obj\Debug\net10.0\Lunar.Console.genruntimeconfig.cache
 E:\mode3d\lunarConsole\Lunar.Console\obj\Debug\net10.0\ref\Lunar.Console.dll
+E:\mode3d\lunarConsole\Lunar.Console\obj\Debug\net10.0\Lunar.Console.sourcelink.json

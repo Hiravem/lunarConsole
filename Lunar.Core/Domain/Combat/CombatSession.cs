@@ -48,18 +48,20 @@ public sealed class CombatSession
         if (command is Commands.FleeCommand)
             return result;
 
-        ProcessEnemyTurn();
+        var logLines = result.LogLines.ToList();
+        ProcessEnemyTurn(logLines);
         Player.SkillState.TickCooldowns();
-        return result;
+        return CommandResult.Ok(logLines.ToArray());
     }
 
-    public void ProcessEnemyTurn()
+    public void ProcessEnemyTurn(List<string>? logLines = null)
     {
         if (IsFinished) return;
 
         Phase = CombatPhase.EnemyTurn;
         var enemyCommand = Enemy.AI.ChooseAction(this);
-        enemyCommand.Execute(this);
+        var enemyResult = enemyCommand.Execute(this);
+        logLines?.AddRange(enemyResult.LogLines);
         Phase = IsFinished ? CombatPhase.Finished : CombatPhase.PlayerTurn;
     }
 

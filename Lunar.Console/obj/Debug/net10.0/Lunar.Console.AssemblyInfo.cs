@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Lunar.Console")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+36f4868821899eb86ad30258a39a2335df7081cd")]
 [assembly: System.Reflection.AssemblyProductAttribute("Lunar.Console")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Lunar.Console")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -27,7 +27,7 @@
     ]
   },
   "packageFolders": {
-    "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget": {}
+    "C:\\Users\\Gia Phat\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -35,7 +35,7 @@
       "projectUniqueName": "E:\\mode3d\\lunarConsole\\Lunar.Console\\Lunar.Console.csproj",
       "projectName": "Lunar.Console",
       "projectPath": "E:\\mode3d\\lunarConsole\\Lunar.Console\\Lunar.Console.csproj",
-      "packagesPath": "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget",
+      "packagesPath": "C:\\Users\\Gia Phat\\.nuget\\packages\\",
       "outputPath": "E:\\mode3d\\lunarConsole\\Lunar.Console\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [

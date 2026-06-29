@@ -9,3 +9,4 @@ E:\mode3d\lunarConsole\Lunar.Core\obj\Debug\net10.0\Lunar.Core.dll
 E:\mode3d\lunarConsole\Lunar.Core\obj\Debug\net10.0\refint\Lunar.Core.dll
 E:\mode3d\lunarConsole\Lunar.Core\obj\Debug\net10.0\Lunar.Core.pdb
 E:\mode3d\lunarConsole\Lunar.Core\obj\Debug\net10.0\ref\Lunar.Core.dll
+E:\mode3d\lunarConsole\Lunar.Core\obj\Debug\net10.0\Lunar.Core.sourcelink.json

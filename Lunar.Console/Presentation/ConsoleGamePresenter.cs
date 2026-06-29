@@ -182,6 +182,14 @@ public sealed class ConsoleGamePresenter
 
         if (result.StartsCombat && result.EnemyId is not null)
         {
+            var start = _combat.StartCombat(_session!, result.EnemyId);
+            if (!start.Success)
+            {
+                _output.WriteLine(start.Error!);
+                _output.Pause();
+                return;
+            }
+
             _output.Pause();
             RunCombat(isBoss: false);
             return;
