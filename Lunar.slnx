@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Lunar.Console/Lunar.Console.csproj" />
+  <Project Path="Lunar.Core/Lunar.Core.csproj" />
+</Solution>
