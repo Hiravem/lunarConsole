@@ -1,4 +1,8 @@
-using Lunar.Core.Application.Interfaces;
+using Lunar.Core.Model;
+using Lunar.Core.Model.Characters;
+using Lunar.Core.Model.Events;
+using Lunar.Core.Model.Items;
+using Lunar.Core.Util;
 
 namespace Lunar.Core.Tests;
 
@@ -24,23 +28,23 @@ public sealed class InMemoryEventBus : IEventBus
 {
     public List<object> Published { get; } = new();
 
-    public void Publish(Domain.Events.IDomainEvent domainEvent) =>
+    public void Publish(IDomainEvent domainEvent) =>
         Published.Add(domainEvent);
 
-    public void Subscribe<T>(Action<T> handler) where T : Domain.Events.IDomainEvent { }
+    public void Subscribe<T>(Action<T> handler) where T : IDomainEvent { }
 }
 
 public static class TestHelpers
 {
-    public static Application.GameSession CreateSession(Domain.Items.ItemFactory factory)
+    public static GameSession CreateSession(ItemFactory factory)
     {
-        var player = new Domain.Characters.Player(
+        var player = new Player(
             "Hero",
-            new Domain.Characters.Health(120),
-            new Domain.Characters.Stats(15, 5, critChance: 10),
+            new Health(120),
+            new Stats(15, 5, critChance: 10),
             factory,
             gold: 0);
 
-        return Application.GameSession.CreateNew(player);
+        return GameSession.CreateNew(player);
     }
 }

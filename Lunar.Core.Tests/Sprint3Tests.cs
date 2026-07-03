@@ -1,9 +1,11 @@
-using Lunar.Core.Application.UseCases;
-using Lunar.Core.Domain.Bosses;
-using Lunar.Core.Domain.Combat;
-using Lunar.Core.Domain.Combat.Commands;
-using Lunar.Core.Domain.Items;
-using Lunar.Core.Domain.World;
+using Lunar.Core.Model.Dto;
+using Lunar.Core.Model.Events;
+using Lunar.Core.Service;
+using Lunar.Core.Model.Bosses;
+using Lunar.Core.Model.Combat;
+using Lunar.Core.Model.Combat.Commands;
+using Lunar.Core.Model.Items;
+using Lunar.Core.Model.World;
 
 namespace Lunar.Core.Tests;
 
@@ -50,9 +52,9 @@ public class Sprint3Tests
         var result = explore.Execute(session);
 
         Assert.True(result.Success);
-        Assert.Equal(Application.DTOs.ExploreEncounterType.Loot, result.EncounterType);
+        Assert.Equal(ExploreEncounterType.Loot, result.EncounterType);
         Assert.NotNull(result.EffectMessage);
-        Assert.Contains(bus.Published, e => e is Domain.Events.ChestOpened);
+        Assert.Contains(bus.Published, e => e is ChestOpened);
     }
 
     [Fact]
@@ -75,7 +77,7 @@ public class Sprint3Tests
         var result = explore.Execute(session);
 
         Assert.True(result.Success);
-        Assert.Equal(Application.DTOs.ExploreEncounterType.Event, result.EncounterType);
+        Assert.Equal(ExploreEncounterType.Event, result.EncounterType);
     }
 
     [Fact]

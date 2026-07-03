@@ -1,7 +1,10 @@
-using Lunar.Core.Application.UseCases;
-using Lunar.Core.Domain.Combat.Commands;
-using Lunar.Core.Domain.Items;
-using Lunar.Core.Domain.Skills;
+using Lunar.Core.Model.Combat;
+using Lunar.Core.Model.Combat.Commands;
+using Lunar.Core.Model.Dto;
+using Lunar.Core.Model.Events;
+using Lunar.Core.Model.Items;
+using Lunar.Core.Model.Skills;
+using Lunar.Core.Service;
 
 namespace Lunar.Core.Tests;
 
@@ -58,8 +61,8 @@ public class Sprint2Tests
         var session = TestHelpers.CreateSession(_items);
         session.Player.Inventory.Add("health_potion");
         session.Player.Health.TakeDamage(40);
-        var enemy = new Domain.World.EnemyFactory().Create("goblin", 1);
-        var combat = new Domain.Combat.CombatSession(session.Player, enemy);
+        var enemy = new Model.World.EnemyFactory().Create("goblin", 1);
+        var combat = new CombatSession(session.Player, enemy);
 
         var result = combat.Execute(new UseItemCommand("health_potion", _items));
 
@@ -71,8 +74,8 @@ public class Sprint2Tests
     public void SkillCommand_HasCooldown()
     {
         var session = TestHelpers.CreateSession(_items);
-        var enemy = new Domain.World.EnemyFactory().Create("goblin", 1);
-        var combat = new Domain.Combat.CombatSession(session.Player, enemy);
+        var enemy = new Model.World.EnemyFactory().Create("goblin", 1);
+        var combat = new CombatSession(session.Player, enemy);
         var skill = new SkillCommand(SkillDefinition.HeroStrike);
 
         var first = combat.Execute(skill);
@@ -94,6 +97,6 @@ public class Sprint2Tests
 
         Assert.Contains("Loot obtained", message);
         Assert.True(session.Player.Inventory.Items.Count > 0);
-        Assert.Contains(bus.Published, e => e is Domain.Events.LootGranted);
+        Assert.Contains(bus.Published, e => e is LootGranted);
     }
 }

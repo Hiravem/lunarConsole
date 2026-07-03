@@ -1,8 +1,8 @@
 # Changelog — Lunar Console Prototype
 
-Tài liệu này ghi lại các task, thay đổi và bug fix từ khi bắt đầu dự án đến hiện tại.
+Tài liệu ghi lại các task, thay đổi và bug fix từ khi bắt đầu dự án đến hiện tại.
 
-**Stack:** .NET 10.0 · C# · Clean Architecture (Domain / Application / Infrastructure / Presentation)
+**Stack:** .NET 10.0 · C# · Layered Architecture (Exception / Model / Repository / Service / UI / Util)
 
 **Solution:** `Lunar.slnx` — `Lunar.Core`, `Lunar.Console`, `Lunar.Core.Tests`
 
@@ -12,10 +12,55 @@ Tài liệu này ghi lại các task, thay đổi và bug fix từ khi bắt đ�
 
 ## [Unreleased]
 
+*(Chưa có thay đổi mới sau v0.2.0)*
+
+---
+
+## [0.2.0] — 2026-07-03
+
+### Changed
+
+- **Tái cấu trúc folder phân tầng** — toàn project chuyển từ Clean Architecture 4 lớp (Domain / Application / Infrastructure / Presentation) sang 6 thư mục:
+
+  | Tầng | Project | Nội dung |
+  |------|---------|----------|
+  | **Exception** | `Lunar.Core/Exception/` | `GameException`, `EntityNotFoundException` |
+  | **Model** | `Lunar.Core/Model/` | Entity, aggregate, DTO, `GameSession`, `GameState` |
+  | **Repository** | `Lunar.Core/Repository/` + `Lunar.Console/Repository/` | `ISaveRepository`, `JsonSaveRepository` |
+  | **Service** | `Lunar.Core/Service/` | Use cases (Explore, Combat, Save, Merchant, …) |
+  | **UI** | `Lunar.Console/UI/` | Screens, Presenter, Input/Output |
+  | **Util** | `Lunar.Core/Util/` + `Lunar.Console/Util/` | `IEventBus`, `IRandomService`, `DomainEventPublisher`, `RandomService`, `InMemoryEventBus` |
+
+- **Namespace migration:**
+
+  | Cũ | Mới |
+  |----|-----|
+  | `Lunar.Core.Domain.*` | `Lunar.Core.Model.*` |
+  | `Lunar.Core.Application.UseCases` | `Lunar.Core.Service` |
+  | `Lunar.Core.Application.DTOs` | `Lunar.Core.Model.Dto` |
+  | `Lunar.Core.Application` (session/state) | `Lunar.Core.Model` |
+  | `Lunar.Core.Application.Interfaces.ISaveRepository` | `Lunar.Core.Repository` |
+  | `Lunar.Core.Application.Interfaces` (event, random) | `Lunar.Core.Util` |
+  | `Lunar.Console.Presentation` | `Lunar.Console.UI` |
+  | `Lunar.Console.Infrastructure` | `Lunar.Console.Repository` / `Util` |
+
+- **`ItemFactory` / `BossFactory`** — throw `EntityNotFoundException` thay vì `KeyNotFoundException` khi id không hợp lệ.
+
 ### Fixed
 
-- **Combat screen biến mất khi đánh quái thường** — `HandleExplore()` gọi `RunCombat()` nhưng không gọi `StartCombat()` trước đó, khiến `ActiveCombatSession` null và vòng lặp combat không chạy. Đã thêm `StartCombat(session, enemyId)` trước khi vào combat.
-- **Log lượt quái bị mất** — `CombatSession.Execute()` giờ gộp log tấn công của enemy sau lượt player vào `CommandResult` trả về.
+- **Combat screen biến mất khi đánh quái thường** — `HandleExplore()` gọi `RunCombat()` nhưng thiếu `StartCombat(session, enemyId)` → `ActiveCombatSession` null, vòng combat không chạy.
+- **Log lượt quái bị mất** — `CombatSession.Execute()` gộp log tấn công enemy sau lượt player vào `CommandResult`.
+
+### Verified
+
+- Build: OK
+- Tests: **27/27 passed** (`Lunar.Core.Tests`)
+
+---
+
+## [0.1.0] — Sprint 1–4 (Console Demo)
+
+Phiên bản đầu tiên chơi được end-to-end trên console. Cấu trúc lúc này dùng **Domain / Application / Infrastructure / Presentation** (trước khi refactor v0.2.0).
 
 ---
 
@@ -28,14 +73,15 @@ Tài liệu này ghi lại các task, thay đổi và bug fix từ khi bắt đ�
 - Review kiến trúc: bổ sung **Demo Rules**, **GameSession**, **GameState**, luồng combat thống nhất qua `ICombatCommand`.
 - Chuẩn hóa Sprint Roadmap (Sprint 1–4), module structure, design patterns, UI mockup console.
 
-### Nguyên tắc thiết kế đã chốt
+### Nguyên tắc thiết kế
 
 | Nguyên tắc | Mô tả |
 |---|---|
-| Clean Architecture | Presentation → Application → Domain ← Infrastructure |
-| Rich Domain Model | Logic trên entity/aggregate, Application layer mỏng |
+| Phân tầng (v0.2+) | UI → Service → Model; Repository/Util implement contract |
+| Rich Domain Model | Logic trên entity/aggregate, Service layer mỏng |
 | Single source of truth | `GameSession` giữ runtime state |
-| Domain events | Aggregate collect events, UseCase publish qua `IEventBus` |
+| Domain events | Aggregate collect events, Service publish qua `IEventBus` |
+| Result pattern | Lỗi nghiệp vụ qua `Success` + `Error` DTO — không có exception layer riêng |
 | Unity-ready | `Lunar.Core` tái sử dụng khi chuyển sang Unity |
 
 ---
@@ -44,7 +90,7 @@ Tài liệu này ghi lại các task, thay đổi và bug fix từ khi bắt đ�
 
 **Mục tiêu:** Chơi được end-to-end trên console — explore, combat, rest, next day.
 
-### Domain (`Lunar.Core`)
+### Model (`Lunar.Core/Model`)
 
 | Task | Chi tiết |
 |---|---|
@@ -57,16 +103,16 @@ Tài liệu này ghi lại các task, thay đổi và bug fix từ khi bắt đ�
 | World | `EnemyFactory`, `EncounterTable`, `EnemyEncounter` |
 | AI | `IEnemyAI` — quái chọn action mỗi lượt |
 
-### Application
+### Service + Util
 
 | Task | Chi tiết |
 |---|---|
 | Runtime state | `GameSession`, `DayFlags` (HasExplored, HasRested) |
-| Use cases | `StartGameUseCase`, `ExploreUseCase`, `CombatUseCase`, `RestUseCase`, `AdvanceDayUseCase` |
+| Services | `StartGameUseCase`, `ExploreUseCase`, `CombatUseCase`, `RestUseCase`, `AdvanceDayUseCase` |
 | DTOs | `CombatResultDto`, `ExploreResultDto`, `GameplayMenuDto` |
-| Interfaces | `IRandomService`, `IEventBus` |
+| Util | `IRandomService`, `IEventBus` |
 
-### Infrastructure & Presentation (`Lunar.Console`)
+### UI + Util (`Lunar.Console`)
 
 | Task | Chi tiết |
 |---|---|
@@ -77,7 +123,7 @@ Tài liệu này ghi lại các task, thay đổi và bug fix từ khi bắt đ�
 | Wiring | `ConsoleGamePresenter` — DI, screen routing, game loop |
 | Loot cơ bản | Thắng combat → thêm item vào inventory |
 
-### Gameplay loop Sprint 1
+### Gameplay loop
 
 - Main Menu → New Game → Day Loop
 - Mỗi ngày: **Explore hoặc Rest** (1 lần) → Next Day
@@ -91,12 +137,12 @@ Tài liệu này ghi lại các task, thay đổi và bug fix từ khi bắt đ�
 
 **Mục tiêu:** Hệ thống item đầy đủ, trang bị ảnh hưởng stats, skill trong combat.
 
-### Domain
+### Model
 
 | Task | Chi tiết |
 |---|---|
 | Item polymorphism | `Item`, `Consumable`, `Weapon`, `Armor`, `Ring` |
-| Factory | `ItemFactory` — đăng ký item mặc định (potion, sword, armor, ring) |
+| Factory | `ItemFactory` — potion, sword, armor, ring |
 | Inventory | `Inventory`, `ItemStack`, `EquipmentLoadout` |
 | Skills | `SkillDefinition`, `PlayerSkillState`, cooldown |
 | Commands | `UseItemCommand`, `SkillCommand` |
@@ -105,15 +151,15 @@ Tài liệu này ghi lại các task, thay đổi và bug fix từ khi bắt đ�
 
 **Items mặc định:** `health_potion`, `rusty_dagger`, `iron_sword`, `leather_armor`, `copper_ring`
 
-### Application
+### Service
 
 | Task | Chi tiết |
 |---|---|
-| Use cases | `EquipItemUseCase`, `UseItemUseCase`, `ApplyLootUseCase` |
-| Domain events | `ItemEquipped`, `LootGranted`, `DomainEventPublisher` |
+| Services | `EquipItemUseCase`, `UseItemUseCase`, `ApplyLootUseCase` |
+| Events | `ItemEquipped`, `LootGranted`, `DomainEventPublisher` |
 | Combat | Skill + Use Item trong combat qua `CombatUseCase` |
 
-### Presentation
+### UI
 
 | Task | Chi tiết |
 |---|---|
@@ -126,7 +172,7 @@ Tài liệu này ghi lại các task, thay đổi và bug fix từ khi bắt đ�
 
 **Mục tiêu:** Boss nhiều phase, explore đa dạng, cửa hàng.
 
-### Domain — Boss
+### Model — Boss
 
 | Task | Chi tiết |
 |---|---|
@@ -137,7 +183,7 @@ Tài liệu này ghi lại các task, thay đổi và bug fix từ khi bắt đ�
 | Events | `BossPhaseChanged`, `BossDefeated` |
 | Boss mặc định | Skeleton King (`skeleton_king`) |
 
-### Domain — World
+### Model — World
 
 | Task | Chi tiết |
 |---|---|
@@ -145,19 +191,14 @@ Tài liệu này ghi lại các task, thay đổi và bug fix từ khi bắt đ�
 | Events | Gold/heal/damage từ event encounter |
 | Gold | `Player.AddGold()`, dùng cho merchant |
 
-### Application
+### Service + UI
 
 | Task | Chi tiết |
 |---|---|
-| Use cases | `BossBattleUseCase`, `MerchantUseCase` |
+| Services | `BossBattleUseCase`, `MerchantUseCase` |
 | Boss rewards | Thắng boss → loot + `Difficulty++` + reset `CurrentDay = 1` |
-| Meta hook | `MetaProgression.BossesDefeated` tăng khi hạ boss |
-
-### Presentation
-
-| Task | Chi tiết |
-|---|---|
-| Screen | `MerchantScreen` — mua/bán item |
+| Meta | `MetaProgression.BossesDefeated` |
+| Screen | `MerchantScreen` — mua/bán |
 | Boss flow | `HandleBoss()` → `StartBossFight()` → Combat (boss UI) |
 | Event bus UI | Log `[Event] Equipped`, `[Event] Boss phase` |
 
@@ -167,24 +208,17 @@ Tài liệu này ghi lại các task, thay đổi và bug fix từ khi bắt đ�
 
 **Mục tiêu:** Lưu/tải game, Continue từ menu, auto-save.
 
-### Application
+### Model + Repository + Service
 
 | Task | Chi tiết |
 |---|---|
 | Snapshot | `GameState` v1 — HP, stats, inventory `{ itemId, qty }`, equipment, day, difficulty, meta |
 | Meta | `MetaProgression` — bosses defeated, persistent qua save |
-| Use cases | `SaveGameUseCase`, `LoadGameUseCase` |
-| Interface | `ISaveRepository` |
+| Services | `SaveGameUseCase`, `LoadGameUseCase` |
+| Repository | `ISaveRepository` (Core), `JsonSaveRepository` (Console) |
 | Events | `GameSaved`, `DayAdvanced` |
 
-### Infrastructure
-
-| Task | Chi tiết |
-|---|---|
-| Persistence | `JsonSaveRepository` — JSON file tại `%LocalAppData%\Lunar\` |
-| Validation | Không save khi đang trong combat |
-
-### Presentation
+### UI
 
 | Task | Chi tiết |
 |---|---|
@@ -193,11 +227,13 @@ Tài liệu này ghi lại các task, thay đổi và bug fix từ khi bắt đ�
 | Auto-save | Khi advance day, khi thắng combat |
 | Game Over | Xóa save, quay Main Menu |
 
+**Validation:** Không save khi đang trong combat.
+
 ---
 
 ## Testing — `Lunar.Core.Tests`
 
-**Framework:** xUnit · **Trạng thái:** 27/27 passed
+**Framework:** xUnit · **Trạng thái:** 27/27 passed (v0.2.0)
 
 | File | Phạm vi |
 |---|---|
@@ -210,19 +246,49 @@ Tài liệu này ghi lại các task, thay đổi và bug fix từ khi bắt đ�
 
 ---
 
-## Cấu trúc project hiện tại
+## Cấu trúc project hiện tại (v0.2.0)
 
 ```text
 lunarConsole/
 ├── CHANGELOG.md
 ├── Console_Prototype_Architecture.md
 ├── Lunar.slnx
-├── Lunar.Core/              # Domain + Application (~55 files)
-├── Lunar.Console/           # Infrastructure + Presentation (~16 files)
-└── Lunar.Core.Tests/        # Unit tests (4 sprint test files)
+│
+├── Lunar.Core/
+│   ├── Exception/           GameException, EntityNotFoundException
+│   ├── Model/
+│   │   ├── Characters/, Combat/, Inventory/, Items/, Bosses/, World/, Events/, Skills/
+│   │   ├── Dto/             CombatResultDto, ExploreResultDto, ...
+│   │   ├── GameSession.cs, GameState.cs, MetaProgression.cs
+│   ├── Repository/          ISaveRepository
+│   ├── Service/             *UseCase, GameplayPresenterMapper
+│   └── Util/                IEventBus, IRandomService, DomainEventPublisher
+│
+├── Lunar.Console/
+│   ├── UI/                  ConsoleGamePresenter, InputReader, OutputWriter, Screens/
+│   ├── Repository/          JsonSaveRepository
+│   ├── Util/                RandomService, InMemoryEventBus
+│   └── Program.cs
+│
+└── Lunar.Core.Tests/        Sprint1–4 tests + TestHelpers
 ```
 
-### Screens (Presentation)
+### Luồng phụ thuộc
+
+```text
+UI (Lunar.Console)
+      │
+      ▼
+Service (Lunar.Core)
+      │
+      ▼
+Model (Lunar.Core)
+      ▲
+      │
+Repository / Util (implement interface → inject từ Program.cs)
+```
+
+### Screens (`Lunar.Console/UI/Screens`)
 
 | Screen | Chức năng |
 |---|---|
@@ -233,49 +299,63 @@ lunarConsole/
 | `EquipmentScreen` | Xem loadout |
 | `MerchantScreen` | Mua/bán |
 
-### Use Cases (Application)
+### Services (`Lunar.Core/Service`)
 
 `StartGame`, `LoadGame`, `SaveGame`, `Explore`, `Combat`, `Rest`, `AdvanceDay`, `BossBattle`, `EquipItem`, `UseItem`, `ApplyLoot`, `Merchant`
 
-### Domain Events
+### Domain Events (`Lunar.Core/Model/Events`)
 
 `EnemyDefeated`, `LootGranted`, `DayAdvanced`, `ItemEquipped`, `PlayerDied`, `BossPhaseChanged`, `ChestOpened`, `BossDefeated`, `GameSaved`
 
+### Exception (`Lunar.Core/Exception`)
+
+| Class | Dùng khi |
+|---|---|
+| `GameException` | Base exception cho lỗi game |
+| `EntityNotFoundException` | Item/boss id không tồn tại trong factory |
+
+*Lỗi nghiệp vụ thông thường (cooldown, không đủ gold, …) vẫn dùng Result pattern — không throw exception.*
+
 ---
 
-## Khác biệt so với Architecture doc (chưa implement)
+## Khác biệt so với Architecture doc
 
-Các mục trong `Console_Prototype_Architecture.md` **chưa có trong code** hoặc **implement khác**:
+`Console_Prototype_Architecture.md` vẫn mô tả Clean Architecture cũ (Domain/Application/Infrastructure/Presentation). Code v0.2.0 đã chuyển sang phân tầng mới — doc chưa cập nhật.
 
-| Doc | Code hiện tại |
+| Doc | Code v0.2.0 |
 |---|---|
-| `CombatState` State pattern (4 states) | `CombatPhase` enum (`PlayerTurn`, `EnemyTurn`, `Finished`) |
-| `ResolveEffectsState` | Chưa có — status effects chưa implement |
-| `StatusEffectCollection`, `StatusEffectResolver` | Chưa có |
+| `Domain/` | `Model/` |
+| `Application/UseCases/` | `Service/` |
+| `Application/DTOs/` | `Model/Dto/` |
+| `Infrastructure/` | `Repository/` + `Util/` |
+| `Presentation/` | `UI/` |
+| `CombatState` State pattern (4 states) | `CombatPhase` enum |
+| `ResolveEffectsState`, StatusEffect | Chưa có |
 | `FileLogger` | Chưa có |
-| `BossScreen` riêng | Reuse `CombatScreen` với boss header |
-| Settings menu | Stub — defer Sprint 4+ |
-| `Lunar.Unity` project | Chưa tạo — planned |
+| `BossScreen` riêng | Reuse `CombatScreen` |
+| Settings menu | Chưa có |
+| `Lunar.Unity` project | Chưa tạo |
 
 ---
 
 ## Git history
 
-| Commit | Mô tả |
+| Commit / Tag | Mô tả |
 |---|---|
 | `36f4868` | Update — initial project structure |
 | `3d1e9f5` | Update 0.1 — Sprint 1–4 implementation |
-
-*(Các thay đổi sau commit cuối — bug fix combat screen, log enemy turn — chưa commit.)*
+| `bd74471` | v0.1 tag |
+| *(uncommitted)* | v0.2.0 — folder restructure, combat fix, exception types |
 
 ---
 
-## Roadmap tiếp theo (đề xuất)
+## Roadmap tiếp theo
 
-- [ ] Hoàn thiện `CombatState` State pattern theo architecture doc
+- [ ] Cập nhật `Console_Prototype_Architecture.md` theo cấu trúc phân tầng mới
+- [ ] Hoàn thiện `CombatState` State pattern
 - [ ] `StatusEffect` system
-- [ ] `FileLogger` cho debug
-- [ ] Settings screen (volume, log level)
-- [ ] Data-driven content tables (JSON/YAML cho items, bosses, encounters)
-- [ ] `Lunar.Unity` — port Presentation layer
+- [ ] `FileLogger` trong `Util`
+- [ ] Settings screen
+- [ ] Data-driven content tables (JSON/YAML)
+- [ ] `Lunar.Unity` — port UI layer
 - [ ] Class diagram & sequence diagram trong Docs/

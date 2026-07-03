@@ -1,8 +1,8 @@
-using Lunar.Console.Infrastructure;
-using Lunar.Core.Application;
-using Lunar.Core.Application.UseCases;
-using Lunar.Core.Domain.Combat;
-using Lunar.Core.Domain.Items;
+using Lunar.Console.Repository;
+using Lunar.Core.Model;
+using Lunar.Core.Service;
+using Lunar.Core.Model.Combat;
+using Lunar.Core.Model.Items;
 
 namespace Lunar.Core.Tests;
 
@@ -74,7 +74,7 @@ public class Sprint4Tests
 
         Assert.True(result.Success);
         Assert.True(repo.HasSave());
-        Assert.Contains(bus.Published, e => e is Domain.Events.GameSaved);
+        Assert.Contains(bus.Published, e => e is Model.Events.GameSaved);
     }
 
     [Fact]
@@ -82,7 +82,7 @@ public class Sprint4Tests
     {
         var repo = new JsonSaveRepository(_tempSavePath);
         var session = TestHelpers.CreateSession(_items);
-        var enemy = new Domain.World.EnemyFactory().Create("goblin", 1);
+        var enemy = new Model.World.EnemyFactory().Create("goblin", 1);
         session.ActiveCombatSession = new CombatSession(session.Player, enemy);
 
         var result = new SaveGameUseCase(repo, new InMemoryEventBus()).Execute(session);

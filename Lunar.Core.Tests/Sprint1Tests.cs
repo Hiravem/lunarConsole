@@ -1,9 +1,9 @@
-using Lunar.Core.Application.UseCases;
-using Lunar.Core.Domain.Characters;
-using Lunar.Core.Domain.Combat;
-using Lunar.Core.Domain.Combat.Commands;
-using Lunar.Core.Domain.Items;
-using Lunar.Core.Domain.World;
+using Lunar.Core.Service;
+using Lunar.Core.Model.Characters;
+using Lunar.Core.Model.Combat;
+using Lunar.Core.Model.Combat.Commands;
+using Lunar.Core.Model.Items;
+using Lunar.Core.Model.World;
 
 namespace Lunar.Core.Tests;
 

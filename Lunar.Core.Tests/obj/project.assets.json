@@ -949,7 +949,7 @@
     ]
   },
   "packageFolders": {
-    "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget": {}
+    "D:\\WindowsTemp\\cursor-sandbox-cache\\194462a68845fe45725d772766086980\\nuget": {}
   },
   "project": {
     "version": "1.0.0",
@@ -957,7 +957,7 @@
       "projectUniqueName": "E:\\mode3d\\lunarConsole\\Lunar.Core.Tests\\Lunar.Core.Tests.csproj",
       "projectName": "Lunar.Core.Tests",
       "projectPath": "E:\\mode3d\\lunarConsole\\Lunar.Core.Tests\\Lunar.Core.Tests.csproj",
-      "packagesPath": "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget",
+      "packagesPath": "D:\\WindowsTemp\\cursor-sandbox-cache\\194462a68845fe45725d772766086980\\nuget",
       "outputPath": "E:\\mode3d\\lunarConsole\\Lunar.Core.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [

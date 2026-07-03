@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Lunar.Core.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+36f4868821899eb86ad30258a39a2335df7081cd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bd744715b3a4a45f02fbb66d8fb285165fdd2f68")]
 [assembly: System.Reflection.AssemblyProductAttribute("Lunar.Core.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Lunar.Core.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

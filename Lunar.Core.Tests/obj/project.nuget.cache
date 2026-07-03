@@ -1,23 +1,23 @@
 {
   "version": 2,
-  "dgSpecHash": "I4UeO4cvpiE=",
+  "dgSpecHash": "/ybCmaOF7PY=",
   "success": true,
   "projectFilePath": "E:\\mode3d\\lunarConsole\\Lunar.Core.Tests\\Lunar.Core.Tests.csproj",
   "expectedPackageFiles": [
-    "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget\\coverlet.collector\\6.0.4\\coverlet.collector.6.0.4.nupkg.sha512",
-    "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget\\microsoft.codecoverage\\17.14.1\\microsoft.codecoverage.17.14.1.nupkg.sha512",
-    "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget\\microsoft.net.test.sdk\\17.14.1\\microsoft.net.test.sdk.17.14.1.nupkg.sha512",
-    "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget\\microsoft.testplatform.objectmodel\\17.14.1\\microsoft.testplatform.objectmodel.17.14.1.nupkg.sha512",
-    "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget\\microsoft.testplatform.testhost\\17.14.1\\microsoft.testplatform.testhost.17.14.1.nupkg.sha512",
-    "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
-    "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget\\xunit\\2.9.3\\xunit.2.9.3.nupkg.sha512",
-    "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget\\xunit.abstractions\\2.0.3\\xunit.abstractions.2.0.3.nupkg.sha512",
-    "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget\\xunit.analyzers\\1.18.0\\xunit.analyzers.1.18.0.nupkg.sha512",
-    "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget\\xunit.assert\\2.9.3\\xunit.assert.2.9.3.nupkg.sha512",
-    "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget\\xunit.core\\2.9.3\\xunit.core.2.9.3.nupkg.sha512",
-    "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget\\xunit.extensibility.core\\2.9.3\\xunit.extensibility.core.2.9.3.nupkg.sha512",
-    "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget\\xunit.extensibility.execution\\2.9.3\\xunit.extensibility.execution.2.9.3.nupkg.sha512",
-    "D:\\WindowsTemp\\cursor-sandbox-cache\\67ed4ca70ed0fd6211732fbe53cf0bc9\\nuget\\xunit.runner.visualstudio\\3.1.4\\xunit.runner.visualstudio.3.1.4.nupkg.sha512"
+    "D:\\WindowsTemp\\cursor-sandbox-cache\\194462a68845fe45725d772766086980\\nuget\\coverlet.collector\\6.0.4\\coverlet.collector.6.0.4.nupkg.sha512",
+    "D:\\WindowsTemp\\cursor-sandbox-cache\\194462a68845fe45725d772766086980\\nuget\\microsoft.codecoverage\\17.14.1\\microsoft.codecoverage.17.14.1.nupkg.sha512",
+    "D:\\WindowsTemp\\cursor-sandbox-cache\\194462a68845fe45725d772766086980\\nuget\\microsoft.net.test.sdk\\17.14.1\\microsoft.net.test.sdk.17.14.1.nupkg.sha512",
+    "D:\\WindowsTemp\\cursor-sandbox-cache\\194462a68845fe45725d772766086980\\nuget\\microsoft.testplatform.objectmodel\\17.14.1\\microsoft.testplatform.objectmodel.17.14.1.nupkg.sha512",
+    "D:\\WindowsTemp\\cursor-sandbox-cache\\194462a68845fe45725d772766086980\\nuget\\microsoft.testplatform.testhost\\17.14.1\\microsoft.testplatform.testhost.17.14.1.nupkg.sha512",
+    "D:\\WindowsTemp\\cursor-sandbox-cache\\194462a68845fe45725d772766086980\\nuget\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "D:\\WindowsTemp\\cursor-sandbox-cache\\194462a68845fe45725d772766086980\\nuget\\xunit\\2.9.3\\xunit.2.9.3.nupkg.sha512",
+    "D:\\WindowsTemp\\cursor-sandbox-cache\\194462a68845fe45725d772766086980\\nuget\\xunit.abstractions\\2.0.3\\xunit.abstractions.2.0.3.nupkg.sha512",
+    "D:\\WindowsTemp\\cursor-sandbox-cache\\194462a68845fe45725d772766086980\\nuget\\xunit.analyzers\\1.18.0\\xunit.analyzers.1.18.0.nupkg.sha512",
+    "D:\\WindowsTemp\\cursor-sandbox-cache\\194462a68845fe45725d772766086980\\nuget\\xunit.assert\\2.9.3\\xunit.assert.2.9.3.nupkg.sha512",
+    "D:\\WindowsTemp\\cursor-sandbox-cache\\194462a68845fe45725d772766086980\\nuget\\xunit.core\\2.9.3\\xunit.core.2.9.3.nupkg.sha512",
+    "D:\\WindowsTemp\\cursor-sandbox-cache\\194462a68845fe45725d772766086980\\nuget\\xunit.extensibility.core\\2.9.3\\xunit.extensibility.core.2.9.3.nupkg.sha512",
+    "D:\\WindowsTemp\\cursor-sandbox-cache\\194462a68845fe45725d772766086980\\nuget\\xunit.extensibility.execution\\2.9.3\\xunit.extensibility.execution.2.9.3.nupkg.sha512",
+    "D:\\WindowsTemp\\cursor-sandbox-cache\\194462a68845fe45725d772766086980\\nuget\\xunit.runner.visualstudio\\3.1.4\\xunit.runner.visualstudio.3.1.4.nupkg.sha512"
   ],
   "logs": []
 }
